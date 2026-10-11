@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explainer</title>
+<style>html,body{margin:0;height:100%;background:#0E1430;display:grid;place-items:center}canvas{display:block;width:100%;height:auto;max-height:100vh;aspect-ratio:16/9;cursor:pointer}</style>
+</head><body><canvas></canvas>
+<!-- All 5 explainers in one file. Open with ?n=1 … ?n=5 (the old 1.html–5.html). -->
+<script>
+const SCENES = {
+1: {
+
+n:1, emoji:"🌱", name:"Seed: Draw it by hand", dur:18,
+captions:[[0.3,2.2,"Part 1. Draw it by hand."],[2.2,5,"1. Draw a line from A to B."],[5,11,"2. Draw two circles the same size."],[11,15,"3. Join the two points where they cross."],[15,18,"The new line cuts AB in half. 🌱 No AI here."]],
+draw(t){
+  const A=[440,400],B=[840,400],r=260,P=[640,234],Q=[640,566],M=[640,400];
+  dot(A[0],A[1],prog(t,1,1.6),C.pink); dot(B[0],B[1],prog(t,1.3,1.9),C.pink);
+  label("A",A[0]-28,A[1]+30,prog(t,1,1.6)); label("B",B[0]+28,B[1]+30,prog(t,1.3,1.9));
+  line(A[0],A[1],B[0],B[1],prog(t,2.2,4.2),C.blue,5);
+  for(const [cx,cy,a,b] of [[A[0],A[1],5,7.6],[B[0],B[1],8.2,10.8]]){
+    const k=prog(t,a,b); arc(cx,cy,r,-Math.PI/2,Math.PI*1.5,k,C.cyan,3,[10,8]);
+    if(k>0&&k<1){const ang=-Math.PI/2+Math.PI*2*k; line(cx,cy,cx+r*Math.cos(ang),cy+r*Math.sin(ang),1,"rgba(34,211,238,.55)",2); dot(cx+r*Math.cos(ang),cy+r*Math.sin(ang),1,C.cyan,6);}
+  }
+  dot(P[0],P[1],prog(t,11,11.6),C.pink,10); dot(Q[0],Q[1],prog(t,11.3,11.9),C.pink,10);
+  label("P",P[0]+30,P[1]-14,prog(t,11,11.6)); label("Q",Q[0]+30,Q[1]+14,prog(t,11.3,11.9));
+  line(640,186,640,600,prog(t,12.2,14.2),C.pink,5);
+  const m=prog(t,14.4,15); dot(M[0],M[1],m,C.ink,7);
+  if(m>0){g.globalAlpha=m;g.strokeStyle=C.ink;g.lineWidth=2;g.strokeRect(640,376,24,24);g.globalAlpha=1;}
+  const s=prog(t,15.2,16); for(const x of [540,740]){line(x-6,388,x+6,412,s,C.pink,3);line(x+2,388,x+14,412,s,C.pink,3);}
+}
+},
+2: {
+
+n:2, emoji:"🌿", name:"Sprout: Write your own proof", dur:18,
+captions:[[0.3,2.5,"Part 2. Write your own proof."],[2.5,5,"1. Look at what you know."],[5,10,"2. Write one step on each line."],[10,15,"3. Give every step a reason."],[15,18,"A reason is a rule. It is not a picture. 🌿"]],
+draw(t){
+  const cx=290,cy=380,d=Math.PI/180;
+  line(120,260,460,500,prog(t,1.2,2.6),C.blue,5); line(120,500,460,260,prog(t,1.6,3),C.blue,5);
+  const a=144.78*d,b=35.22*d, pulse=t>15?1+0.25*Math.sin((t-15)*6):1;
+  arc(cx,cy,46*pulse,a,2*Math.PI-a,prog(t,3,3.8),C.pink,5);
+  arc(cx,cy,46,-a,-b,prog(t,3.3,4.1),C.cyan,5);
+  arc(cx,cy,46*pulse,-b,b,prog(t,3.6,4.4),C.pink,5);
+  label("1",cx-80,cy,prog(t,3,3.8),C.pink); label("2",cx,cy-80,prog(t,3.3,4.1),C.cyan); label("3",cx+80,cy,prog(t,3.6,4.4),C.pink);
+  const hx=560; label("Statement",hx,190,prog(t,4.4,5),C.dim,`600 20px ${SANS}`,"left"); label("Reason",900,190,prog(t,4.4,5),C.dim,`600 20px ${SANS}`,"left");
+  line(hx,212,1220,212,prog(t,4.4,5.2),"rgba(255,255,255,.25)",2);
+  const rows=[["∠1 + ∠2 = 180°","Straight line = 180°"],["∠2 + ∠3 = 180°","Straight line = 180°"],["∠1 + ∠2 = ∠2 + ∠3","Both equal 180°"],["∠1 = ∠3","Take ∠2 from both sides"]];
+  rows.forEach(([s,r],i)=>{const y=262+i*70,t0=5+i*2.4;
+    type(s,hx,y,prog(t,t0,t0+1.1),C.ink,'italic 600 28px "Times New Roman", serif');
+    type(r,900,y,prog(t,t0+1.2,t0+1.9),C.blue,`600 22px ${SANS}`);
+    const k=prog(t,t0+2,t0+2.3); if(k>0){g.globalAlpha=k;g.strokeStyle=C.pink;g.lineWidth=4;g.beginPath();g.moveTo(1196,y);g.lineTo(1206,y+10);g.lineTo(1226,y-12);g.stroke();g.globalAlpha=1;}
+  });
+}
+},
+3: {
+
+n:3, emoji:"💧", name:"Water: Get one hint (the AI part)", dur:20,
+captions:[[0.3,3,"Part 3. Get one hint. This is the AI part."],[3,5.5,"1. The helper reads YOUR proof."],[5.5,9,"2. It points at ONE weak step."],[9,13,"3. A little water helps. Too much drowns the plant."],[13,16.5,"4. You decide: makes sense, not sure, or disagree."],[16.5,20,"Not sure? The teacher checks it. 💧"]],
+draw(t){
+  const rows=[["AB = AC","Given"],["Draw AD to cut ∠A in half","Construction"],["∠BAD = ∠CAD","Cut in half"],["AD = AD","Same segment"],["△ABD ≅ △ACD","SAS"],["∠B = ∠C","“They look equal”"]];
+  const tA=t<9?1:1-prog(t,9,9.5);
+  rows.forEach(([s,r],i)=>{const y=160+i*52,a=prog(t,0.8+i*.15,1.4+i*.15)*tA;
+    if(i===5&&t>5){box(180,y-24,920,48,10,"rgba(34,211,238,.14)",C.cyan,a*prog(t,5,5.4),2);}
+    label(String(i+1),200,y,a,C.dim,`600 20px ${SANS}`); label(s,240,y,a,C.ink,'italic 600 26px "Times New Roman", serif',"left");
+    label(r,760,y,a,i===5?C.pink:C.blue,`600 22px ${SANS}`,"left");});
+  if(t<9){const k=prog(t,3.4,5), y=lerp(70,420,k*k); if(k>0&&k<1){g.fillStyle=C.cyan;g.beginPath();g.moveTo(860,y-26);g.bezierCurveTo(876,y-6,880,y+4,860,y+12);g.bezierCurveTo(840,y+4,844,y-6,860,y-26);g.fill();}
+    const rp=prog(t,5,6.5); for(let j=0;j<3;j++){const rr=rp*60-j*14; if(rr>0){g.globalAlpha=(1-rp)*.9;arc(860,420,rr,0,Math.PI*2,1,C.cyan,2);g.globalAlpha=1;}}
+    const b=fade(t,5.6,6.2,8.4,9); box(330,500,620,58,29,"rgba(34,211,238,.12)",C.cyan,b,2);
+    label("Step 6: is “they look equal” a rule?",640,529,b,C.cyan,`700 26px ${SANS}`);}
+  const p=fade(t,9.4,10,12.4,13);
+  if(p>0){ for(const [x,big] of [[430,false],[850,true]]){
+      box(x-70,420,140,90,14,"rgba(255,95,162,.25)",C.pink,p,3);
+      const grow=prog(t,10.4,11.8);
+      if(!big){line(x,420,x,420-110*grow,p,"#7BE0A0",5); dot(x,420-110*grow,p*grow,C.pink,16); dot(x+18,420-60*grow,p*grow,"#7BE0A0",9);
+        g.fillStyle=C.cyan; g.globalAlpha=p; g.beginPath(); g.arc(x-50,300,9,0,7); g.fill(); g.globalAlpha=1;
+        label("A little: it grows ✓",x,560,p,"#7BE0A0",`700 24px ${SANS}`);}
+      else{line(x,420,x+30*grow,420-40*grow,p,"#7BE0A0",5); box(x-110,520-250*grow,220,250*grow+2,18,"rgba(34,211,238,.38)",null,p);
+        label("Too much: it drowns ✗",x,560,p,C.pink,`700 24px ${SANS}`);}
+    } label("Too much water = the answer. Not allowed.",640,200,prog(t,11.4,12)*p,C.ink,`700 26px ${SANS}`);}
+  const q=prog(t,13,13.8); if(q>0){const opts=["Makes sense","Not sure","I disagree"];
+    opts.forEach((o,i)=>{const x=280+i*360, on=i===1&&t>14.6; box(x-150,250,300,72,36,on?"rgba(255,95,162,.25)":"rgba(255,255,255,.06)",on?C.pink:"rgba(255,255,255,.35)",q,on?4:2); label(o,x,286,q,C.ink,`700 28px ${SANS}`);});
+    const a=prog(t,16.6,17.6); line(640,330,640,330+120*a,1,C.pink,4);
+    if(a>0.95){g.fillStyle=C.pink;g.beginPath();g.moveTo(628,440);g.lineTo(652,440);g.lineTo(640,458);g.fill();}
+    const tb=prog(t,17.4,18.2); box(470,466,340,62,31,"rgba(79,123,255,.2)",C.blue,tb,3); label("🧑‍🌾 Teacher checks it",640,497,tb,C.ink,`700 26px ${SANS}`);}
+}
+},
+4: {
+
+n:4, emoji:"🌸", name:"Bloom: Explain it out loud", dur:18,
+captions:[[0.3,3,"Part 4. Explain it out loud."],[3,5.5,"1. Split the triangle in half."],[5.5,12,"2. Flip one half. It fits exactly."],[12,14.5,"3. So angle B equals angle C."],[14.5,18,"Your partner asks why. You answer. 🌸 No AI here."]],
+draw(t){
+  const A=[640,170],B=[440,520],Cc=[840,520],D=[640,520];
+  const fl=prog(t,8.6,11.6), sx=Math.cos(Math.PI*fl);
+  poly([A,D,Cc],prog(t,5.6,6.4),null,"rgba(34,211,238,.22)");
+  poly([A,[640+(B[0]-640)*sx,B[1]],D],prog(t,5.6,6.4),null,"rgba(255,95,162,.28)");
+  if(fl>0) poly([A,[640+(B[0]-640)*sx,B[1]],D],1,C.pink,null,3);
+  line(B[0],B[1],A[0],A[1],prog(t,1,2),C.blue,5); line(A[0],A[1],Cc[0],Cc[1],prog(t,1.5,2.5),C.blue,5); line(Cc[0],Cc[1],B[0],B[1],prog(t,2,3),C.blue,5);
+  label("A",640,140,prog(t,1,1.6)); label("B",410,540,prog(t,2,2.6)); label("C",870,540,prog(t,2.4,3));
+  g.setLineDash([12,10]); line(A[0],A[1],D[0],D[1],prog(t,3.4,5),C.pink,4); g.setLineDash([]); label("D",640,552,prog(t,4.6,5.2));
+  const tk=prog(t,4.4,5); line(530,330,550,350,tk,C.pink,4); line(730,350,750,330,tk,C.pink,4);
+  const gl=fade(t,11.6,12,13.6,14.4); if(gl>0) poly([A,Cc,D],gl,C.cyan,null,7);
+  const an=prog(t,12.2,13); arc(440,520,54,-1.05,0,an,C.pink,5); arc(840,520,54,Math.PI,Math.PI+1.05,an,C.pink,5);
+  label("∠B = ∠C",640,400,prog(t,12.6,13.4),C.ink,'italic 700 40px "Times New Roman", serif');
+  [[1020,250,"Why?",14.8],[1090,340,"Why does it fit?",15.6]].forEach(([x,y,s,a])=>{const k=prog(t,a,a+.5); g.font=`700 24px ${SANS}`; const w=g.measureText(s).width+40; box(x-w/2,y-26,w,52,26,"rgba(255,95,162,.18)",C.pink,k,2); label(s,x,y,k,C.ink,`700 24px ${SANS}`);});
+  label("🐝",1170,250,prog(t,14.6,15.2),C.ink,`40px ${SANS}`);
+}
+},
+5: {
+
+n:5, emoji:"🍓", name:"Fruit: Show what you know", dur:20,
+captions:[[0.3,2,"Part 5. Show what you know."],[2,9,"1. Add squares. Each one is the sum of the last two."],[9,14,"2. Long side ÷ short side gets close to 1.618."],[14,16.5,"That number is the golden ratio."],[16.5,20,"The quiz has no computers. 🍓 Only the teacher grades."]],
+draw(t){
+  const u=38, ox=330, oy=210, X=v=>ox+v*u, Y=v=>oy+v*u;
+  const sq=[[9,5,1],[8,5,1],[8,6,2],[10,5,3],[8,0,5],[0,0,8]], cols=[C.cyan,C.blue,C.pink,C.cyan,C.blue,C.pink];
+  const dimA=t>16.5?1-0.6*prog(t,16.5,17.2):1;
+  sq.forEach(([x,y,s],i)=>{const g0=prog(t,2+i*1.1,2.8+i*1.1), k=g0*dimA; if(k<=0)return;
+    const cx=X(x+s/2),cy=Y(y+s/2),w=s*u*(0.7+0.3*g0);
+    box(cx-w/2,cy-w/2,w,w,3,cols[i]+"2A",cols[i],k,2.5); label(String(s),cx,cy,k*(s>1?1:0.9),C.ink,`700 ${Math.min(40,12+s*5)}px ${SANS}`);});
+  const arcs=[[10,5,1,Math.PI,Math.PI/2,true],[9,6,1,Math.PI,1.5*Math.PI],[10,6,2,Math.PI/2,Math.PI],[10,5,3,0,Math.PI/2],[8,5,5,-Math.PI/2,0],[8,8,8,Math.PI,1.5*Math.PI]];
+  arcs.forEach(([cx,cy,r,a0,a1,ccw],i)=>{const k=prog(t,9.2+i*0.75,9.95+i*0.75)*dimA; if(k<=0)return;
+    g.strokeStyle=C.pink;g.lineWidth=5;g.globalAlpha=Math.min(1,dimA+.2);g.beginPath();g.arc(X(cx),Y(cy),r*u,a0,a0+(a1-a0)*k,!!ccw);g.stroke();g.globalAlpha=1;});
+  const ratios=[["1 ÷ 1","1"],["2 ÷ 1","2"],["3 ÷ 2","1.5"],["5 ÷ 3","1.667"],["8 ÷ 5","1.6"],["13 ÷ 8","1.625"]];
+  ratios.forEach(([a,b],i)=>{const k=fade(t,2.4+i*1.1,2.9+i*1.1)*(t<16.5?1:1-prog(t,16.5,17)); label(`${a} = ${b}`,1050,190+i*44,k,i===5?C.pink:C.dim,'italic 600 26px "Times New Roman", serif',"left");});
+  label("φ ≈ 1.618",1120,500,prog(t,14,14.8),C.pink,'italic 700 46px "Times New Roman", serif');
+  const z=prog(t,17,17.8); box(360,322,560,106,53,"#0E1430",C.pink,z,4); label("📵  No computers in the quiz",640,375,z,C.ink,`700 30px ${SANS}`);
+}
+}
+};
+const TITLES = ["Part 1 · Seed: Draw", "Part 2 · Sprout: Write", "Part 3 · Water: Get one hint", "Part 4 · Bloom: Explain", "Part 5 · Fruit: Show what you know"], LABELS = ["Animation: draw a line that cuts a segment in half, using a compass", "Animation: write a two-column proof that crossing lines make equal angles", "Animation: the AI hint helper points at one weak step; a little water helps, too much drowns the plant", "Animation: flip one half of an isosceles triangle onto the other to show the base angles are equal", "Animation: build a golden rectangle from squares; the ratio gets close to 1.618"];
+const N = Math.min(5, Math.max(1, +new URLSearchParams(location.search).get("n") || 1));
+window.SCENE = SCENES[N];
+document.title = TITLES[N - 1];
+document.querySelector("canvas").setAttribute("aria-label", LABELS[N - 1]);
+</script>
+<script>
+// Explainer engine: every frame is drawn in code. draw(frame) is a pure function of the frame number.
+// Style: dark canvas, smooth constructions, pink / blue / cyan accents (a 3Blue1Brown-style look).
+const W = 1280, H = 720, FPS = 30;
+const C = { bg:"#0E1430", ink:"#F4F6FF", dim:"#8C96C4", pink:"#FF5FA2", blue:"#4F7BFF", cyan:"#22D3EE", grid:"rgba(79,123,255,0.07)" };
+const SERIF = 'italic 600 30px "Times New Roman", Times, serif';
+const SANS = '"Avenir Next", "Helvetica Neue", Arial, sans-serif';
+
+const cv = document.querySelector("canvas"), g = cv.getContext("2d");
+cv.width = W; cv.height = H;
+
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };   // smooth in-out
+const prog = (t, a, b) => ease((t - a) / (b - a));                                                       // 0..1 between a and b
+const lerp = (a, b, k) => a + (b - a) * k;
+const fade = (t, a, b, c, d) => Math.min(prog(t, a, b), d === undefined ? 1 : 1 - prog(t, c, d));       // fade in a..b, out c..d
+
+function bg() {
+  g.fillStyle = C.bg; g.fillRect(0, 0, W, H);
+  g.strokeStyle = C.grid; g.lineWidth = 1;
+  for (let x = 0; x <= W; x += 40) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = 0; y <= H; y += 40) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+}
+function line(x1, y1, x2, y2, k, col, w = 4) {
+  if (k <= 0) return;
+  g.strokeStyle = col; g.lineWidth = w; g.lineCap = "round";
+  g.beginPath(); g.moveTo(x1, y1); g.lineTo(lerp(x1, x2, k), lerp(y1, y2, k)); g.stroke();
+}
+function arc(x, y, r, a0, a1, k, col, w = 3, dash) {
+  if (k <= 0) return;
+  g.strokeStyle = col; g.lineWidth = w; g.setLineDash(dash || []);
+  g.beginPath(); g.arc(x, y, r, a0, a0 + (a1 - a0) * k); g.stroke(); g.setLineDash([]);
+}
+function dot(x, y, k, col, r = 9) {
+  if (k <= 0) return;
+  g.globalAlpha = clamp(k); g.fillStyle = col;
+  g.beginPath(); g.arc(x, y, r * (0.6 + 0.4 * k), 0, Math.PI * 2); g.fill(); g.globalAlpha = 1;
+}
+function label(s, x, y, a, col = C.ink, font = SERIF, align = "center") {
+  if (a <= 0) return;
+  g.globalAlpha = clamp(a); g.fillStyle = col; g.font = font; g.textAlign = align; g.textBaseline = "middle";
+  g.fillText(s, x, y); g.globalAlpha = 1;
+}
+function type(s, x, y, k, col, font, align = "left") { label(s.slice(0, Math.round(s.length * clamp(k))), x, y, k > 0 ? 1 : 0, col, font, align); }
+function poly(pts, k, col, fill, w = 4) {
+  if (k <= 0) return;
+  g.globalAlpha = clamp(k);
+  g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath();
+  if (fill) { g.fillStyle = fill; g.fill(); }
+  if (col) { g.strokeStyle = col; g.lineWidth = w; g.lineJoin = "round"; g.stroke(); }
+  g.globalAlpha = 1;
+}
+function box(x, y, w, h, r, fill, stroke, a = 1, lw = 2) {
+  if (a <= 0) return;
+  g.globalAlpha = clamp(a); g.beginPath(); g.roundRect(x, y, w, h, r);
+  if (fill) { g.fillStyle = fill; g.fill(); }
+  if (stroke) { g.strokeStyle = stroke; g.lineWidth = lw; g.stroke(); }
+  g.globalAlpha = 1;
+}
+// Title in the top-left: part number, emoji, name.
+function title(t, n, emoji, name) {
+  const a = fade(t, 0, .8);
+  label(typeof n === "number" ? `PART ${n} OF 5` : `EXPLAINER ${n}`, 48, 46, a, C.dim, `600 16px ${SANS}`, "left");
+  label(`${emoji}  ${name}`, 48, 82, a, C.ink, `700 34px ${SANS}`, "left");
+}
+// Caption: one short sentence at a time, in a pill at the bottom.
+function captions(t, list) {
+  for (const [a, b, s] of list) {
+    const k = fade(t, a, a + .4, b - .4, b);
+    if (k <= 0) continue;
+    g.font = `600 30px ${SANS}`;
+    const w = g.measureText(s).width + 56;
+    box(W / 2 - w / 2, H - 104, w, 58, 29, "rgba(255,255,255,0.08)", "rgba(255,255,255,0.18)", k);
+    label(s, W / 2, H - 75, k, C.ink, `600 30px ${SANS}`);
+  }
+}
+function progress(f) {
+  g.fillStyle = "rgba(255,255,255,0.08)"; g.fillRect(0, H - 6, W, 6);
+  const grad = g.createLinearGradient(0, 0, W, 0); grad.addColorStop(0, C.pink); grad.addColorStop(.6, C.blue); grad.addColorStop(1, C.cyan);
+  g.fillStyle = grad; g.fillRect(0, H - 6, W * f / (FRAMES - 1), 6);
+}
+
+const SCENE = window.SCENE, DUR = SCENE.dur, FRAMES = Math.round(DUR * FPS);
+function draw(frame) {
+  const t = frame / FPS;
+  bg(); SCENE.draw(t); title(t, SCENE.n, SCENE.emoji, SCENE.name); captions(t, SCENE.captions); progress(frame);
+}
+window.draw = draw; window.FRAMES = FRAMES; window.FPS = FPS;
+window.CUES = SCENE.captions.map(c => c[0]).filter(x => x > 0);
+
+// Live preview: loops forever. The frame comes from the clock; draw() itself stays pure.
+if (!location.search.includes("render")) {
+  let start = performance.now(), paused = false, held = 0;
+  const loop = now => { if (!paused) draw(Math.floor(((now - start) / 1000 * FPS)) % FRAMES); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+  cv.addEventListener("click", () => { paused = !paused; if (paused) held = performance.now(); else start += performance.now() - held; });
+  addEventListener("message", e => { if (e.data === "restart") { start = performance.now(); paused = false; } });
+} else draw(0);
+</script>
+</body></html>
