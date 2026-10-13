@@ -84,7 +84,7 @@ We rejected the **open chat** design from SUST 720.
 ## 📢 07 · Disclosure
 
 > [!IMPORTANT]
-> 🤖 **AI (Claude, by Anthropic) helped** plan this project. It wrote the code, the notes, and the 8 explainer videos. It checked sources and ran the tests. **Meta Llama 3.1 8B (open-weight)**, reached through Vercel AI Gateway, answers inside the live hint tutor. Each request opts out of prompt training.
+> 🤖 **AI (Claude, by Anthropic) helped** plan this project. It wrote the code, the notes, and the 8 explainer videos. It checked sources and ran the tests. **Meta Llama 3.3 70B (open-weight)**, reached through Vercel AI Gateway, answers inside the live hint tutor. Each request opts out of prompt training.
 >
 > 🧑‍🎓 **We** picked the client course and the people. We set every rule. We removed content that we did not want. We added the real syllabus. We approved each step.
 >

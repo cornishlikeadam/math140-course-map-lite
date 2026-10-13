@@ -8,7 +8,7 @@ A slim copy of [math140-course-map](https://github.com/cornishlikeadam/math140-c
 
 ## 📁 Files
 - `index.html`: the whole page as one file, with no build step. The course data lives in the `R` (steps), `P` (people) and `CARDS` (evidence) arrays in the script at the bottom, and the SVG map is drawn from those. The simple-words text lives in `K`.
-- `api/proof-check.js`: a Vercel function behind the Proof check hint tutor. It calls Meta Llama 3.1 8B (open-weight) through Vercel AI Gateway, opts out of prompt training, and authenticates with Vercel’s short-lived OIDC request token (or `AI_GATEWAY_API_KEY` outside Vercel).
+- `api/proof-check.js`: a Vercel function behind the Proof check hint tutor. It calls Meta Llama 3.3 70B (open-weight) through Vercel AI Gateway, opts out of prompt training, and authenticates with Vercel’s short-lived OIDC request token (or `AI_GATEWAY_API_KEY` outside Vercel).
 - `prototype/index.html`: the M3 practice helper. It uses simulated hints and makes no AI calls.
 - `guide/index.html` + `guide/qa.json`: the Garden Guide. It answers questions from `qa.json` by keyword matching (no AI). "Open the note" links go to `notes/` in the main repo.
 - `explainers/index.html`: all 5 canvas explainers plus the engine in one file. Open `explainers/index.html?n=1` … `?n=5`. It replaces the main repo's `1.html`–`5.html` + `engine.js`.

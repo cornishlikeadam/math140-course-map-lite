@@ -36,7 +36,7 @@ Each video is about **20 seconds**. The site plays them from [`explainers/index.
 | Folder / file | What it does |
 |---|---|
 | `index.html` | 🗺️ The map and the 💧 Proof check tool |
-| `api/proof-check.js` | 🤖 The tool's server part (Meta Llama 3.1 8B (open-weight) through Vercel AI Gateway) |
+| `api/proof-check.js` | 🤖 The tool's server part (Meta Llama 3.3 70B (open-weight) through Vercel AI Gateway) |
 | `assets/` | 🎨 Colors, fonts, menu, and the video pop-up |
 | `explainers/index.html` | 🎬 All 5 videos, drawn in code |
 | `guide/` | 📗 The Garden Guide and its 48 answers (no AI) |
