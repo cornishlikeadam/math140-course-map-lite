@@ -65,6 +65,7 @@ Can a **hints-only** AI help students fix proofs **without** hurting their learn
 | **3** | MATH 140 syllabus (Weeks 1–10) | Week numbers | From our note [MATH 140 Course Map - Unified](https://github.com/cornishlikeadam/math140-course-map/blob/main/notes/06%20Disclosure/../MATH%20140%20Course%20Map%20-%20Unified.md) |
 | **4** | OpenCode Zen docs and model list | Free AI models | Read Oct 1 |
 | **5** | OpenRouter docs | Tried, then **dropped** | Read Sept 24 |
+| **6** | Vercel AI Gateway authentication, pricing, and Gemini 2.5 Flash Lite model pages | OIDC connection, included monthly credit, model choice, and no-training control | Read Oct 13 |
 
 ### 🗑️ Sources we removed
 | Source | Why it was used | Why it was removed |
@@ -97,6 +98,7 @@ This log is **append-only**. We add corrections as new lines.
 | **5** | Oct 1 | Hints | OpenCode Zen (Space Bunny, Big Pickle, MiMo) | Answers inside the Proof check tutor | **Product feature** |
 | **6** | Oct 6 | M3 build | Claude | Wrote all prototype code. Ran 16 + 15 checks. | **Substantial** |
 | **7** | Oct 6 | Redesign + videos + guide | Claude | Wrote code, notes, 8 videos, and this folder | **Substantial** |
+| **8** | Oct 13 | API repair | Claudian / Gemini 2.5 Flash Lite | Replaced the broken OpenCode connection with Vercel AI Gateway, updated disclosures, and tested the live hint boundary. Gemini now answers inside the tutor. | **Substantial + product feature** |
 
 > [!NOTE]
 > 🧑‍🎓 **What we did ourselves:** picked the course. Named the people. Set the rules. Removed content. Picked the providers. Asked for each change. Added the real syllabus. Approved each step.
@@ -130,9 +132,10 @@ This log is **append-only**. We add corrections as new lines.
 | **P24** | Oct 6 | Add 3Blue1Brown-style explainer videos as a pop-up and in the README. | Made 5 code-drawn videos. Added the pop-up and GIFs. |
 | **P25** | Oct 6 | Make a disclosure (AI 101 order), an interview kit, a white paper, metrics, a quick syllabus, and SCADpro pitch ideas. | Made this folder, the interview kit, the white paper, and 3 more videos. |
 | **P26** | Oct 11 | Rebuild the repo so it fits the same folders as the DIGI 230 repo, under 18 files, with 2 disclosure files. Keep the site and the tool working. Connect it back. | Made `math140-course-map-lite`: 14 files, 6 folders. Merged 5 explainers into 1 file and 8 disclosure pages into these 2. Linked both repos. |
+| **P27** | Oct 13 | Fix the API. | Diagnosed the expired/empty OpenCode credential, moved the function to Vercel AI Gateway with OIDC, added a prompt-training opt-out, updated the records, and tested the endpoint. |
 
 > [!TIP]
-> 📝 **26 rows cover about 31 messages.** Some short follow-ups are grouped in 1 row. The full prompts are in the chat history. These short versions keep the **meaning**. They do not keep every word.
+> 📝 **27 rows cover about 32 messages.** Some short follow-ups are grouped in 1 row. The full prompts are in the chat history. These short versions keep the **meaning**. They do not keep every word.
 
 ## 🧪 05 · Outputs: Runs and Revisions
 
@@ -163,9 +166,11 @@ This log is **append-only**. We add corrections as new lines.
 | **9** | Practice helper v1 | Start over clears a stop | **Still open.** Fix next. |
 | **10** | Redesign | Generic look | White, pink, blue, cyan. Garden theme. Videos. Guide. |
 | **11** | Long pages | Too much on the screen. The tool was hard to find. | **Closed tabs** on the map and the Guide. Notes reader removed. **💧 Hint tool** link in the menu. |
+| **12** | Live API | The old OpenCode credential failed. | Switched to Vercel AI Gateway with automatic OIDC authentication and a prompt-training opt-out. |
 
 ### 🧪 Test totals
 - **3** live hint tests (Oct 1): 2 pass, 1 close call.
 - **16** practice checks (Oct 6): 16 pass.
 - **15** re-run checks (Oct 6, new look): 15 pass.
+- **3** API repair boundary tests (Oct 13): 3 pass.
 - **1** known hole: open.

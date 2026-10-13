@@ -8,7 +8,7 @@ A slim copy of [math140-course-map](https://github.com/cornishlikeadam/math140-c
 
 ## 📁 Files
 - `index.html`: the whole page as one file, with no build step. The course data lives in the `R` (steps), `P` (people) and `CARDS` (evidence) arrays in the script at the bottom, and the SVG map is drawn from those. The simple-words text lives in `K`.
-- `api/proof-check.js`: a Vercel function behind the Proof check hint tutor. It calls free OpenCode Zen models with `reasoning_effort: "low"`, and reads its key from `OPENCODE_API_KEY` (or `OPENROUTER_API_KEY`). Set the key in the Vercel project env settings; never commit it.
+- `api/proof-check.js`: a Vercel function behind the Proof check hint tutor. It calls Google Gemini 2.5 Flash Lite through Vercel AI Gateway, opts out of prompt training, and authenticates with Vercel’s short-lived `VERCEL_OIDC_TOKEN` (or `AI_GATEWAY_API_KEY` outside Vercel).
 - `prototype/index.html`: the M3 practice helper. It uses simulated hints and makes no AI calls.
 - `guide/index.html` + `guide/qa.json`: the Garden Guide. It answers questions from `qa.json` by keyword matching (no AI). "Open the note" links go to `notes/` in the main repo.
 - `explainers/index.html`: all 5 canvas explainers plus the engine in one file. Open `explainers/index.html?n=1` … `?n=5`. It replaces the main repo's `1.html`–`5.html` + `engine.js`.
@@ -38,5 +38,5 @@ A slim copy of [math140-course-map](https://github.com/cornishlikeadam/math140-c
 - Keep the transparency log honest about what the tool can't do.
 
 ## 🚀 Deploy
-- This repo has no Vercel project of its own. To deploy it separately, run `vercel deploy --prod` here and add `OPENCODE_API_KEY` in the new project's settings.
+- This repo has no Vercel project of its own. To deploy it separately, run `vercel deploy --prod` here. Vercel injects `VERCEL_OIDC_TOKEN` automatically; a non-Vercel host needs `AI_GATEWAY_API_KEY`.
 - The PDF deliverable is `[TeamName]_M1_CourseMap.pdf`, exported with headless Chrome using `--print-to-pdf`, with the live link on page 1.

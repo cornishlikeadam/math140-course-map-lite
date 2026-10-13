@@ -36,7 +36,7 @@ Each video is about **20 seconds**. The site plays them from [`explainers/index.
 | Folder / file | What it does |
 |---|---|
 | `index.html` | 🗺️ The map and the 💧 Proof check tool |
-| `api/proof-check.js` | 🤖 The tool's server part (free OpenCode Zen models) |
+| `api/proof-check.js` | 🤖 The tool's server part (Gemini 2.5 Flash Lite through Vercel AI Gateway) |
 | `assets/` | 🎨 Colors, fonts, menu, and the video pop-up |
 | `explainers/index.html` | 🎬 All 5 videos, drawn in code |
 | `guide/` | 📗 The Garden Guide and its 48 answers (no AI) |
@@ -47,9 +47,9 @@ Each video is about **20 seconds**. The site plays them from [`explainers/index.
 1. Open a terminal in this folder.
 2. Run `python3 -m http.server 8765`.
 3. Open http://127.0.0.1:8765.
-4. ⚠️ The 💧 hint tool needs the server part. It works on Vercel with the `OPENCODE_API_KEY` key. It does **not** work with the simple server.
+4. ⚠️ The 💧 hint tool needs the server part. It works when deployed on Vercel. It does **not** work with the simple server.
 
-## 🔑 The hint tool key
-1. The key is **never** in this repo.
-2. On Vercel, add `OPENCODE_API_KEY` in **Settings → Environment Variables**.
-3. Then deploy again.
+## 🔑 The hint tool connection
+1. Vercel gives the deployed function a short-lived `VERCEL_OIDC_TOKEN` automatically.
+2. No long-lived provider key is stored in this repo.
+3. A non-Vercel host needs `AI_GATEWAY_API_KEY`.
