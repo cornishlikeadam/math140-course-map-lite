@@ -50,6 +50,6 @@ Each video is about **20 seconds**. The site plays them from [`explainers/index.
 4. ⚠️ The 💧 hint tool needs the server part. It works when deployed on Vercel. It does **not** work with the simple server.
 
 ## 🔑 The hint tool connection
-1. Vercel gives the deployed function a short-lived `VERCEL_OIDC_TOKEN` automatically.
+1. Vercel sends the deployed function a short-lived OIDC token with each request.
 2. No long-lived provider key is stored in this repo.
 3. A non-Vercel host needs `AI_GATEWAY_API_KEY`.
